@@ -1,0 +1,25 @@
+---
+title: "Threat Modeling for Founders Who Don't Have Time"
+description: "A one-hour threat modeling ritual that catches the vulnerabilities that actually sink startups."
+category: "Cybersecurity"
+date: "2026-05-12"
+---
+
+Most startups don't get breached by nation-states. They get breached by an exposed S3 bucket, a leaked API key, or a forgotten admin panel. The good news: those are exactly the failures a lightweight threat model catches.
+
+## The one-hour version
+
+Draw your system on a whiteboard. Every box is a component, every arrow is data moving. Now ask four questions about each arrow:
+
+1. **Who can send this?** If the answer is "anyone," you've found a boundary that needs authentication.
+2. **Can it be read in transit?** TLS everywhere is table stakes — including service-to-service.
+3. **Can it be replayed or forged?** Signatures and idempotency keys are cheap insurance.
+4. **What happens if this component lies?** Trust boundaries are where security lives or dies.
+
+## Rank by blast radius, not likelihood
+
+Founders instinctively rank threats by how likely they feel. Rank by damage instead. A low-probability event that ends the company outranks a daily annoyance every time.
+
+## Write it down
+
+A threat model that lives in one engineer's head is a threat model the company doesn't have. One page, updated quarterly, reviewed when architecture changes. That's the entire ritual.

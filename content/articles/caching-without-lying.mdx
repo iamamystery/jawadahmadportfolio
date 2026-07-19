@@ -1,0 +1,24 @@
+---
+title: "Caching Without Lying to Your Users"
+description: "A system design approach to caching where stale data is a decision, never an accident."
+category: "System Design"
+date: "2025-11-02"
+---
+
+Every cache is a decision to sometimes show users the past. Good caching architecture makes that decision explicit.
+
+## Classify your data by staleness budget
+
+Some data can be minutes old (product listings). Some can be seconds old (inventory counts). Some can never be stale (account balances). Write these budgets down — they are requirements, not implementation details.
+
+## Invalidate on events, expire as backup
+
+TTLs alone create a lie window: the time between a change and its expiry. Event-driven invalidation closes the window; the TTL remains as a safety net for missed events, not the primary mechanism.
+
+## Design for the stampede
+
+When a hot key expires, a thousand requests race to rebuild it. Request coalescing — one rebuild, everyone else waits — turns a database incident into a non-event.
+
+## Never cache authorization
+
+The one rule with no exceptions: permission checks happen on every request, against live data. A cache that remembers yesterday's access rights is a vulnerability with good latency.

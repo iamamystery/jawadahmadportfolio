@@ -1,0 +1,24 @@
+---
+title: "Designing APIs That Age Well"
+description: "Versioning, contracts, and the boring decisions that keep an API alive for a decade."
+category: "Backend Engineering"
+date: "2026-03-28"
+---
+
+An API is a promise. Every consumer who integrates against it is trusting that the promise holds — which means the real skill in API design isn't elegance. It's foresight.
+
+## Version from day one
+
+The most expensive URL in your system is the one without a version in it. `/v1/` costs nothing today and buys you the freedom to be wrong later.
+
+## Contracts before code
+
+Write the OpenAPI spec first. Not because tooling demands it, but because writing the contract forces you to see the API the way a consumer will — before implementation details bias every decision.
+
+## Expand, never break
+
+The safest evolution pattern is additive: new fields are optional, new endpoints coexist with old ones, and deprecation is a scheduled event with a migration guide, not a surprise.
+
+## Design errors as carefully as successes
+
+A great error response tells the caller three things: what went wrong, whose fault it was, and what to do next. Most APIs answer none of these. Yours answering all three is a competitive advantage.

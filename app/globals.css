@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --night: #070b12;
+  --surface: #111827;
+  --ink: #f8fafc;
+  --gold: #d4a574;
+  --ember: #ff6b35;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--night);
+}
+
+body {
+  background: var(--night);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(212, 165, 116, 0.35);
+  color: var(--ink);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--night);
+}
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 8px;
+  border: 2px solid var(--night);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 165, 116, 0.5);
+}
+
+/* Focus visibility for accessibility */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Subtle grain for depth */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Fine keyline utility */
+.keyline {
+  border: 1px solid rgba(212, 165, 116, 0.14);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(100deg, #f8fafc 30%, #d4a574 70%, #ff6b35 105%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   HERO — Digital Headquarters
+   --------------------------------------------------------------------------- */
+
+/* Blueprint grid. Two hairline layers: fine cells inside coarse blocks. */
+.hq-grid {
+  background-image:
+    linear-gradient(rgba(184, 115, 51, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184, 115, 51, 0.055) 1px, transparent 1px),
+    linear-gradient(rgba(248, 250, 252, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248, 250, 252, 0.018) 1px, transparent 1px);
+  background-size:
+    140px 140px,
+    140px 140px,
+    28px 28px,
+    28px 28px;
+}
+
+/* Fades any layer out toward the edges so nothing terminates on a hard line. */
+.hq-fade {
+  -webkit-mask-image: radial-gradient(ellipse 78% 68% at 50% 45%, #000 25%, transparent 100%);
+  mask-image: radial-gradient(ellipse 78% 68% at 50% 45%, #000 25%, transparent 100%);
+}
+
+/* Line-mask reveal: the inner span slides up from behind a clipped edge.
+   Uses clip-path rather than `overflow: hidden` so the mask clips only on the
+   vertical axis — the negative left/right insets let wide glyphs and their
+   side bearings render past the box instead of being sheared off. Each line
+   clips only its own content, so the bottom inset can never expose the
+   line below it. */
+.hq-line-mask {
+  display: block;
+  clip-path: inset(-0.35em -100vw -0.06em -0.12em);
+}
+
+/* --- Name plate -----------------------------------------------------------
+   Each line carries two background layers clipped to the glyphs: a static
+   base (the colour you actually read) and a soft highlight parked off-stage
+   that crosses the text once per cycle. Keeping them separate means the
+   metallic finish on the accent line exists at rest — the sweep rides over
+   it rather than being it. */
+
+.hq-name-line,
+.hq-name-accent {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  background-repeat: no-repeat;
+  /* Sweep occupies the last third of the cycle; the rest is stillness. */
+  animation: hq-sheen 9.5s cubic-bezier(0.45, 0, 0.15, 1) infinite;
+}
+
+/* MUHAMMAD / JAWAD — clean white, lifted a shade by the passing highlight. */
+.hq-name-line {
+  background-image:
+    linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0) 44%,
+      rgba(255, 255, 255, 0.85) 50%,
+      rgba(255, 255, 255, 0) 56%
+    ),
+    linear-gradient(#eef2f7, #eef2f7);
+  background-size:
+    300% 100%,
+    100% 100%;
+  background-position:
+    220% 0,
+    0 0;
+}
+
+/* AHMAD — the signature. Brushed bronze: warm shadow, a soft champagne
+   crest just past centre, settling back down. No glow, no saturation spike. */
+.hq-name-accent {
+  background-image:
+    linear-gradient(
+      100deg,
+      rgba(255, 252, 245, 0) 44%,
+      rgba(255, 252, 245, 0.5) 50%,
+      rgba(255, 252, 245, 0) 56%
+    ),
+    linear-gradient(
+      100deg,
+      #a37a4d 0%,
+      #b98a57 14%,
+      #cda06f 30%,
+      #dfc199 44%,
+      #e6ceaa 52%,
+      #cc9e6f 64%,
+      #b0814f 78%,
+      #9a6d40 90%,
+      #ac7f4e 100%
+    );
+  background-size:
+    300% 100%,
+    100% 100%;
+  background-position:
+    220% 0,
+    0 0;
+}
+
+@keyframes hq-sheen {
+  0%,
+  64% {
+    background-position:
+      220% 0,
+      0 0;
+  }
+  100% {
+    background-position:
+      -120% 0,
+      0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  /* Park the highlight off-stage; the static base layer is what remains. */
+  .hq-name-line,
+  .hq-name-accent {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
